@@ -47,11 +47,19 @@ public class FeedbackAPI extends NotSecureBankAPI {
 
         try {
             //V5
-            //ho aggiunto l'escapeHtml per ogni campo inserito dall'utente
-            name = StringEscapeUtils.escapeHtml((String) myJson.get("name"));
-            email = StringEscapeUtils.escapeHtml((String) myJson.get("email"));
-            subject = StringEscapeUtils.escapeHtml((String) myJson.get("subject"));
-            comments = StringEscapeUtils.escapeHtml((String) myJson.get("message"));
+            //ho aggiunto sanitizeWeb per ogni campo inserito dall'utente
+            name = ServletUtil.sanitizeWeb((String) myJson.get("name"));
+            email = ServletUtil.sanitizeWeb((String) myJson.get("email"));
+            subject = ServletUtil.sanitizeWeb((String) myJson.get("subject"));
+            comments = ServletUtil.sanitizeWeb((String) myJson.get("message"));
+
+            //V7
+            //ho aggiunto sanitizeHtmlWithRegex per ogni campo inserito dall'utente
+            //p.s. ho impostato il metodo sanitizeWeb nella V5 qui sopra perchè ho visto dopo che esisteva già il metodo che fa la stessa cosa che avevo già committato
+            name = ServletUtil.sanitizeHtmlWithRegex(name);
+            email = ServletUtil.sanitizeHtmlWithRegex(email);
+            subject = ServletUtil.sanitizeHtmlWithRegex(subject);
+            comments = ServletUtil.sanitizeHtmlWithRegex(comments);
         } catch (JSONException e) {
             LOG.error(e.toString());
             return Response.status(400).entity("{\"Error\": \"Body does not contain all the correct attributes\"}").build();
