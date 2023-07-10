@@ -16,6 +16,8 @@ import org.apache.wink.json4j.JSONObject;
 
 import com.notsecurebank.util.DBUtil;
 import com.notsecurebank.util.ServletUtil;
+import com.notsecurebank.model.User;
+import com.notsecurebank.model.User.Role;
 
 @Path("/admin")
 public class AdminAPI extends NotSecureBankAPI {
