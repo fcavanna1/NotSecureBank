@@ -58,7 +58,9 @@ public class LoginServlet extends HttpServlet {
             password = password.trim();
 
             if (!DBUtil.isValidUser(username, password)) {
-                LOG.error("Login failed >>> User: " + username + " >>> Password: " + password);
+                //V3
+                //ho rimosso la password all'interno della stringa del log
+                LOG.error("Login failed >>> User: " + username );
                 throw new Exception("Login Failed: We're sorry, but this username or password was not found in our system. Please try again.");
             }
         } catch (Exception ex) {
