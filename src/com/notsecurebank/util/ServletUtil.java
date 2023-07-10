@@ -25,6 +25,8 @@ import com.notsecurebank.model.Account;
 import com.notsecurebank.model.Feedback;
 import com.notsecurebank.model.User;
 
+import java.text.SimpleDateFormat;
+
 public class ServletUtil {
     private static final Logger LOG = LogManager.getLogger(ServletUtil.class);
 
@@ -276,5 +278,16 @@ public class ServletUtil {
         String specialPrizeCode = UUID.randomUUID().toString();
         request.getSession().setAttribute("specialPrizeCode", specialPrizeCode);
         return specialPrizeCode;
+    }
+
+    public static boolean isValidDate(String inDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(inDate.trim());
+        } catch (Exception pe) {
+            return false;
+        }
+        return true;
     }
 }

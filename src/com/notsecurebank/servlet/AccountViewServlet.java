@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import com.notsecurebank.util.ServletUtil;
 
 public class AccountViewServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -50,7 +51,12 @@ public class AccountViewServlet extends HttpServlet {
             String startTime = request.getParameter("startDate");
             String endTime = request.getParameter("endDate");
 
-            LOG.info("Transactions within '" + startTime + "' and '" + endTime + "'.");
+            //V2
+            //ho aggiunto dentro ServletUtil un metodo che controlla se la stringa è effetticamente una data
+            //solo se entrambi gli input sono delle date allora viene stampato il log
+            if(ServletUtil.isValidDate(startTime) && ServletUtil.isValidDate(endTime)){
+                LOG.info("Transactions within '" + startTime + "' and '" + endTime + "'.");
+            }
             RequestDispatcher dispatcher = request.getRequestDispatcher("/bank/transaction.jsp?" + ((startTime != null) ? "&startTime=" + startTime : "") + ((endTime != null) ? "&endTime=" + endTime : ""));
             dispatcher.forward(request, response);
         }
