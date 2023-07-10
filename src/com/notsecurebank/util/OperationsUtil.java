@@ -39,10 +39,9 @@ public class OperationsUtil {
             }
 
             Account[] cookieAccounts = null;
-            if (notSecureBankCookie == null)
-                cookieAccounts = user.getAccounts();
-            else
-                cookieAccounts = Account.fromBase64List(notSecureBankCookie.getValue());
+            //V11
+            //ho rimosso parti di codice in modo che il cookieAccounts venga sempre calcolato dai dati presi a DB
+            cookieAccounts = user.getAccounts();
 
             try {
                 accountId = Long.parseLong(accountIdString);
