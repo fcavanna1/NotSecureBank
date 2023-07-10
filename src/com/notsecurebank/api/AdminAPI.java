@@ -85,6 +85,16 @@ public class AdminAPI extends NotSecureBankAPI {
             return Response.status(400).entity(response).build();
         }
 
+        //V6
+        //ho aggiunto del codice per recuperare 2 attributi di sessione per controllare se l'utente è un admin
+        Object admObj = request.getSession().getAttribute(ServletUtil.SESSION_ATTR_ADMIN_KEY);
+        Object user = request.getSession().getAttribute(ServletUtil.SESSION_ATTR_USER);
+
+        if (!((user != null && ((User) user).getRole() == Role.Admin) || (admObj != null && admObj instanceof String && ((String) admObj).equals(ServletUtil.SESSION_ATTR_ADMIN_VALUE)))) {
+            LOG.error("Access denied.");
+            return Response.status(500).entity("{\"error\":\"Access denied.\"}").build();
+        }
+
         String firstname;
         String lastname;
         String username;
